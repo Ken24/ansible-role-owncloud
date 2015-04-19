@@ -1,13 +1,6 @@
 ---
 # - name: Confirm httpd24 are installed
 #   yum: name="httpd24.x86_64" state=present
-
-- name: Ensure preriquisite packages are installed
-  yum: name="{{ item }}" state=present
-  with_items:
-    - libselinux-python
-
-
 - name: repository add from src
   template:
     src: "{{ ansible_distribution }}_isv_ownCloud_community.repo.j2"

@@ -7,14 +7,19 @@
 
 - hosts: owncloud
   sudo: yes
+  pre_tasks:
+    - name: Ensure preriquisite packages are installed
+      yum: name="{{ item }}" state=present
+      with_items:
+        - libselinux-python
   roles:
     - owncloud
   vars:
-    owncloud_db_host: 153.149.39.103  #"{{ hostvars['test-mariadb']['ansible_eth0']['ipv4']['address'] }}"
+    owncloud_db_host: "{{ hostvars['test-mariadb']['ansible_eth0']['ipv4']['address'] }}"
 
 - hosts: default
   sudo: yes
   roles:
     - owncloud
   vars:
-    owncloud_db_host: 153.149.39.103  #"{{ hostvars['test-mariadb']['ansible_eth0']['ipv4']['address'] }}"
+    owncloud_db_host:  #"{{ hostvars['test-mariadb']['ansible_eth0']['ipv4']['address'] }}"

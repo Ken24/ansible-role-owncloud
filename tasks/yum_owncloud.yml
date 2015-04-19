@@ -1,0 +1,30 @@
+---
+# - name: Confirm httpd24 are installed
+#   yum: name="httpd24.x86_64" state=present
+
+- name: Ensure preriquisite packages are installed
+  yum: name="{{ item }}" state=present
+  with_items:
+    - libselinux-python
+
+
+- name: repository add from src
+  template:
+    src: "{{ ansible_distribution }}_isv_ownCloud_community.repo.j2"
+    dest: /etc/yum.repos.d/isv:ownCloud:community.repo
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Install owncloud
+  yum:
+    name: "{{ item }}"
+    state: present
+    enablerepo: remi
+  with_items:
+    - php-mysql
+    - MySQL-python
+    - owncloud
+
+- name: Ensure httpd service is enabled and started
+  service: name=httpd enabled=yes state=started

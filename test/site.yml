@@ -1,0 +1,20 @@
+---
+
+- hosts: mariadb
+  sudo: yes
+  roles:
+    - pcextreme.mariadb
+
+- hosts: owncloud
+  sudo: yes
+  roles:
+    - owncloud
+  vars:
+    owncloud_db_host: 153.149.39.103  #"{{ hostvars['test-mariadb']['ansible_eth0']['ipv4']['address'] }}"
+
+- hosts: default
+  sudo: yes
+  roles:
+    - owncloud
+  vars:
+    owncloud_db_host: 153.149.39.103  #"{{ hostvars['test-mariadb']['ansible_eth0']['ipv4']['address'] }}"

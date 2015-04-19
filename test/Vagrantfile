@@ -1,0 +1,82 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+
+
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Dotenv.load
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  trial_name = "test-owncloud"
+  db_name = "test-mariadb"
+
+
+  # Every Vagrant virtual environment requires a box to build off of.
+  config.vm.box = "dummy"
+  config.ssh.username = "vagrant"
+  config.ssh.private_key_path = ENV['SSH_PEM']
+
+  config.vm.provider :cloudstack do |cloudstack|
+
+    # connection setting
+    # cloudstack.name = "ggle-worker-001"
+    cloudstack.host = "comp-api.jp-e1.cloudn-service.com"
+    cloudstack.path = "/client/api"
+    cloudstack.port = "443"
+    cloudstack.scheme = "https"
+    cloudstack.api_key = ENV['CLOUDN_API_KEY']
+    cloudstack.secret_key = ENV['CLOUDN_SEC_KEY']
+    cloudstack.instance_ready_timeout = 1800
+
+    # VM-environment setting
+    # template
+    cloudstack.zone_id = "1b02e74c-6c21-4aa3-b96c-51042de8fccd" # jp-e1a
+    cloudstack.network_type = "Basic"
+  end
+
+
+  config.vm.define trial_name do |node|
+    node.vm.provider :cloudstack do |cloudstack, override|
+      # m1.small
+      cloudstack.service_offering_id = "88ce379e-a686-4ae4-946f-dc3358275276"
+
+      # template of centos
+      cloudstack.template_id = "c3b82a6b-15ba-435a-bd97-34c6dbd04368"
+      # template of ubuntu
+      # cloudstack.template_id = "225cdd88-2dfb-409b-98ec-621672dba75f"
+      cloudstack.security_group_ids = ['bd35d864-c2f1-446f-9553-4979567fc773']
+      cloudstack.display_name = "made-by-vagrant_" + trial_name
+    end
+  end
+  config.vm.define db_name do |node|
+    node.vm.provider :cloudstack do |cloudstack, override|
+      # m1.small
+      cloudstack.service_offering_id = "88ce379e-a686-4ae4-946f-dc3358275276"
+
+      # template of centos
+      cloudstack.template_id = "c3b82a6b-15ba-435a-bd97-34c6dbd04368"
+      # template of ubuntu
+      # cloudstack.template_id = "225cdd88-2dfb-409b-98ec-621672dba75f"
+      cloudstack.security_group_ids = ['bd35d864-c2f1-446f-9553-4979567fc773']
+      cloudstack.display_name = "made-by-vagrant_" + db_name
+    end
+  end
+
+
+  config.vm.provision "ansible" do |ansible|
+
+    ansible.groups = {
+      "owncloud" => trial_name,
+      "mariadb" => db_name,
+      # "default" => {"gathering" =>"smart","fact_caching" => "redis","fact_caching_timeout" => 86400,}
+    }
+    ansible.playbook = "site.yml"
+  end
+
+end

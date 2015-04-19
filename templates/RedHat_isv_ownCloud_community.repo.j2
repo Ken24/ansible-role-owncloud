@@ -1,0 +1,7 @@
+[isv_ownCloud_community]
+name=Latest stable community release of ownCloud (RedHat_RHEL-{{ ansible_distribution_major_version }})
+type=rpm-md
+baseurl=http{{ owncloud_colon }}//download.opensuse.org/repositories/isv{{ owncloud_colon }}/ownCloud{{ owncloud_colon }}/community/RedHat_RHEL-{{ ansible_distribution_major_version }}/
+gpgcheck=1
+gpgkey=http{{ owncloud_colon }}//download.opensuse.org/repositories/isv{{ owncloud_colon }}/ownCloud{{ owncloud_colon }}/community/RedHat_RHEL-{{ ansible_distribution_major_version }}/repodata/repomd.xml.key
+enabled=1

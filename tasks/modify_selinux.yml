@@ -1,0 +1,35 @@
+---
+
+- name: Get status of selinux
+  shell: getenforce
+  register: owncloud_getenforce
+  ignore_errors: yes
+  changed_when: False
+
+- name: Confirm sutable role and type configuration on on SELinux
+  command: "semanage fcontext -a -t httpd_sys_rw_content_t '{{ item }}'"
+  with_items:
+    - '/var/www/html/owncloud/data'
+    - '/var/www/html/owncloud/config'
+    - '/var/www/html/owncloud/apps'
+  when: owncloud_getenforce.stdout.find('Enforcing') != -1
+
+- name: Confirm sutable role and type configuration on on SELinux
+  command: "semanage fcontext -a -t httpd_sys_rw_content_t '{{ item }}'"
+  with_items:
+    - '/var/www/html/owncloud/data'
+    - '/var/www/html/owncloud/config'
+    - '/var/www/html/owncloud/apps'
+  when: owncloud_getenforce.stdout.find('Enforcing') != -1
+
+- name: Confirm restoring file(s) default (modified above) SELinux security context
+  command: "restorecon '{{ item }}'"
+  with_items:
+    - '/var/www/html/owncloud/data'
+    - '/var/www/html/owncloud/config'
+    - '/var/www/html/owncloud/apps'
+  when: owncloud_getenforce.stdout.find('Enforcing') != -1
+
+- name: Confirm SELinux allows access to a remote database
+  command: setsebool -P httpd_can_network_connect_db on
+  when: (owncloud_db_host != 'localhost') and (owncloud_db_host != '127.0.0.1') and (owncloud_getenforce.stdout.find('Enforcing') != -1)

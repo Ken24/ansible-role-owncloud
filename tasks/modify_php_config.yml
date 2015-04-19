@@ -1,0 +1,16 @@
+---
+
+- name: "Modify /etc/php.ini"
+  lineinfile:
+    dest: '/etc/php.ini'
+    state: present
+    backrefs: yes
+    regexp: '{{ item.regexp }}'
+    line: '{{ item.line }}'
+    backup: yes
+  with_items:
+  - regexp: '^;?\s*default_charset'
+    line: "default_charset = \"{{ owncloud_php_default_char }}\""
+  - regexp: '^;?\s*date.timezone'
+    line: "date.timezone = \"{{ owncloud_php_timezone }}\""
+  notify: Restart httpd restert

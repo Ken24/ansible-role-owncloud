@@ -1,0 +1,15 @@
+---
+
+owncloud_db_add_on_mysql_enable: true
+owncloud_db_host: localhost
+owncloud_db_user: owncloud
+owncloud_db_pass: owncloud
+owncloud_db_table:
+  collation: utf8_general_ci
+  encoding: utf8
+  name_to_be_created: owncloud
+
+owncloud_php_timezone: Asia/Tokyo
+owncloud_php_default_char: UTF-8
+
+owncloud_colon: ':'

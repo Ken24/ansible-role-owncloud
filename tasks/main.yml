@@ -1,0 +1,16 @@
+---
+# tasks file for installation of node.js on centos
+- include: yum_owncloud.yml
+- include: modify_php_config.yml
+- include: add_database.yml
+  when: owncloud_db_add_on_mysql_enable
+
+
+- name: Check SELinux is installed (if not, occurring error is to be ignored)
+  shell: which getenforce
+  register: owncloud_which_getenfoce
+  changed_when: False
+  ignore_errors: yes
+# include if SELinux is installed
+- include: modify_selinux.yml
+  when: owncloud_which_getenfoce.stdout != ""

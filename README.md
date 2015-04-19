@@ -35,6 +35,7 @@ Role Variables
 Dependencies
 ------------
 
+* A package ``libselinux-python`` is required in advance if SELinux is installed.
 * ``magnus919.epel``: for installation of EPEL for CentOS systems
 * ``hostclick.remi_repo``: for addition of Remi repository for CentOS systems
 
@@ -44,6 +45,11 @@ Example Playbook
 
     - hosts: owncloud
       sudo: yes
+      pre_tasks:
+        - name: Ensure preriquisite packages are installed
+          yum: name="{{ item }}" state=present
+          with_items:
+            - libselinux-python
       roles:
         - owncloud
       vars:

@@ -24,7 +24,6 @@ Role Variables
   * ``owncloud_db_host``: default value is localhost
   * ``owncloud_db_user``: default value is ``owncloud``
   * ``owncloud_db_pass``: default value is ``owncloud``
-  * ``owncloud_db_table_name_to_be_created``:
   * ``owndloud_db_table``
     * ``name_to_be_created``: the default value is ``owncloud``
     * ``collation``: the default value is ``utf8_general_ci``

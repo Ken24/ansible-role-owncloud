@@ -1,4 +1,4 @@
 ---
 # handlers file for lets-chat
 - name: "Restart httpd restert"
-  service: name=httpd state=restart
+  service: name=httpd state=restarted

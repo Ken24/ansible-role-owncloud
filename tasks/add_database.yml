@@ -3,7 +3,7 @@
   mysql_user: 
     name: "{{ owncloud_db_user }}"
     password: "{{ owncloud_db_pass }}"
-    priv: "{{ owncloud_db_table.name_to_be_created }}:ALL"
+    priv: "{{ owncloud_db_table.name_to_be_created }}ALL"
     state: present
 - name: OWNCLOUD | add table for owncloud
   mysql_db:

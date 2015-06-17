@@ -4,6 +4,8 @@
 - include: modify_php_config.yml
 - include: add_database.yml
   when: owncloud_db_add_on_mysql_enable
+  tags:
+    - database
 
 
 - name: Check SELinux is installed (if not, occurring error is to be ignored)

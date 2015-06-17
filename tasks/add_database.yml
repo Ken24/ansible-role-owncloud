@@ -1,16 +1,15 @@
 ---
-- name: OWNCLOUD | create mysql user for owncloud
-  mysql_user: 
-    name: "{{ owncloud_db_user }}"
-    password: "{{ owncloud_db_pass }}"
-    priv: "{{ owncloud_db_table.name_to_be_created }}:ALL"
-    state: present
-- name: OWNCLOUD | add table for owncloud
+- name: OWNCLOUD | add database for owncloud
   mysql_db:
     name: "{{ owncloud_db_table.name_to_be_created }}"
     collation: "{{ owncloud_db_table.collation | default('utf8_general_ci') }}"
     encoding: "{{ owncloud_db_table.encoding | default('utf8') }}"
     state: present
-    login_host: "{{ owncloud_db_host }}"
-    login_user: "{{ owncloud_db_user }}"
-    login_password: "{{ owncloud_db_pass }}"
+
+- name: OWNCLOUD | create mysql user for owncloud
+  mysql_user:
+    name: "{{ owncloud_db_user }}"
+    host: "{{ owncloud_db_host }}"
+    password: "{{ owncloud_db_pass }}"
+    priv: "{{ owncloud_db_table.name_to_be_created }}.*:ALL"
+    state: present

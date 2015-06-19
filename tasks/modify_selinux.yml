@@ -23,7 +23,7 @@
   when: owncloud_getenforce.stdout.find('Enforcing') != -1
 
 - name: Confirm restoring file(s) default (modified above) SELinux security context
-  command: "restorecon '{{ item }}'"
+  command: "restorecon -R '{{ item }}'"
   with_items:
     - '/var/www/html/owncloud/data'
     - '/var/www/html/owncloud/config'

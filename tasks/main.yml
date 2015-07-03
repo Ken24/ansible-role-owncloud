@@ -13,6 +13,8 @@
   register: owncloud_which_getenfoce
   changed_when: False
   ignore_errors: yes
+  always_run: yes
+
 # include if SELinux is installed
 - include: modify_selinux.yml
   when: owncloud_which_getenfoce.stdout != ""

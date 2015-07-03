@@ -1,4 +1,4 @@
 #!/bin/sh
 
-/usr/bin/rsync -arvHz {{ owncloud_data_dir }} {{ owncloud_data_dir }}/ > /var/log/owncloud-backup.log 2>&1
+/usr/bin/rsync -arvHz {{ owncloud_data_dir }} {{ owncloud_backup_dir }}/ > /var/log/owncloud-backup.log 2>&1
 

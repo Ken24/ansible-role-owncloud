@@ -16,3 +16,8 @@
 # include if SELinux is installed
 - include: modify_selinux.yml
   when: owncloud_which_getenfoce.stdout != ""
+
+- include: backup.yml
+  when: owncloud_backup
+  tags:
+    - backup

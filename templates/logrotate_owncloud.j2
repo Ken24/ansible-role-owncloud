@@ -1,0 +1,18 @@
+{{ owncloud_data_dir }}/owncloud.log {
+        weekly
+        missingok
+        rotate 8
+        compress
+        notifempty
+        create 640 apache apache 
+}
+
+{% if owncloud_backup %}
+/var/log/owncloud-backup.log {
+        daily
+        missingok
+        rotate 14
+        compress
+        notifempty
+}
+{% endif %}

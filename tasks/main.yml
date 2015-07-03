@@ -17,6 +17,10 @@
 - include: modify_selinux.yml
   when: owncloud_which_getenfoce.stdout != ""
 
+- include: logs.yml
+  tags:
+    - logs
+
 - include: backup.yml
   when: owncloud_backup
   tags:

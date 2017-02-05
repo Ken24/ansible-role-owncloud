@@ -1,0 +1,8 @@
+- name: logs rotation
+  template:
+    src: logrotate_owncloud.j2
+    dest: /etc/logrotate.d/owncloud
+    owner: root
+    group: root
+    mode: 0644
+

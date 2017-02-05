@@ -1,0 +1,8 @@
+- name: backup datadir
+  template:
+    src: owncloud_backup.j2
+    dest: /etc/cron.daily/owncloud-backup
+    owner: root
+    group: root
+    mode: 0755
+  when: owncloud_backup and owncloud_backup_dir is defined

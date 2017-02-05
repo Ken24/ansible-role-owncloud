@@ -1,5 +1,7 @@
 ---
 
+owncloud_data_dir: /var/www/html/owncloud/data
+
 owncloud_db_add_on_mysql_enable: true
 owncloud_db_host: localhost
 owncloud_db_user: owncloud
@@ -13,3 +15,6 @@ owncloud_php_timezone: Asia/Tokyo
 owncloud_php_default_char: UTF-8
 
 owncloud_colon: ':'
+
+owncloud_backup: false
+owncloud_backup_dir: /var/owncloud/backup

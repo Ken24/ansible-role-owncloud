@@ -5,6 +5,7 @@
   register: owncloud_getenforce
   ignore_errors: yes
   changed_when: False
+  always_run: yes
 
 - name: Confirm sutable role and type configuration on on SELinux
   command: "semanage fcontext -a -t httpd_sys_rw_content_t '{{ item }}'"
@@ -23,7 +24,7 @@
   when: owncloud_getenforce.stdout.find('Enforcing') != -1
 
 - name: Confirm restoring file(s) default (modified above) SELinux security context
-  command: "restorecon '{{ item }}'"
+  command: "restorecon -R '{{ item }}'"
   with_items:
     - '/var/www/html/owncloud/data'
     - '/var/www/html/owncloud/config'
